@@ -4,12 +4,12 @@ import sys
 from enum import Enum
 from typing import Optional, Union
 
-import colorama
-
 RESET: str = "\033[0m"
 
 
 def _is_colorization_supported() -> bool:
+    import colorama
+
     colorama.init()
 
     file_name = 'lm_color.temp'
@@ -40,6 +40,8 @@ def _is_colorization_supported() -> bool:
 
 
 def _is_true_color_supported() -> bool:
+    import colorama
+    
     colorama.init()
 
     if os.name == 'nt':
