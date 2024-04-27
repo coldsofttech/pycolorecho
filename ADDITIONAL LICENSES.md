@@ -1,9 +1,3 @@
-### TERMINAL DISCLAIMER
-
-The terminals utilized within GitHub Actions for testing, listed below, are the property of their respective owners and
-are governed by their individual licenses. This package explicitly disclaims ownership of these terminals and does not
-assume responsibility for their utilization within pipelines or other workflows.
-
 ### COLOR HEX CODES DISCLAIMER
 
 This package incorporates color HEX codes obtained from Wikipedia sites, as indicated by the provided links. It's
