@@ -195,7 +195,7 @@ jobs:
 
       - name: Run Tests
         run: |
-          xvfb-run dbus-launch xterm -e "pytest tests -vv -rEPW -o pytest_collection_order=alphabetical --cache-clear --color=yes --html=pytest_results.html --self-contained-html"
+          xvfb-run xterm -e "pytest tests -vv -rEPW -o pytest_collection_order=alphabetical --cache-clear --color=yes --html=pytest_results.html --self-contained-html"
 
       - name: Check For Failures
         if: always()
@@ -226,7 +226,7 @@ jobs:
         os: [ ubuntu-latest, windows-latest, macos-latest ]
         python-version: [ '3.10' ]
     runs-on: ${{ matrix.os }}
-    needs: [ test, test_ubuntu_gnome ]
+    needs: [ test, test_ubuntu_gnome, test_ubuntu_xterm ]
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
