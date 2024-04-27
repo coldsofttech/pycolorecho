@@ -8,10 +8,6 @@ RESET: str = "\033[0m"
 
 
 def _is_colorization_supported() -> bool:
-    import colorama
-
-    colorama.init()
-
     file_name = 'lm_color.temp'
     # Check for Windows operating systems
     if sys.platform == 'win32':
@@ -28,28 +24,24 @@ def _is_colorization_supported() -> bool:
 
     try:
         with open(file_name, 'w') as f:
-            print(colorama.Fore.RED + 'Test', file=f, end='')
-            print(colorama.Style.RESET_ALL, file=f, end='')
+            os.system('tput setaf 1')
+            os.system('tput setab 0')
+            os.system('echo -n "\033[1;31m"')
+            os.system('echo -n "\033[0m')
 
         with open(file_name, 'r') as f:
             content = f.read()
-            return 'Test' in content
+            return '\033[1;31m' in content
     finally:
         os.remove(file_name)
-        colorama.deinit()
 
 
 def _is_true_color_supported() -> bool:
-    import colorama
-
-    colorama.init()
-
     if os.name == 'nt':
         true_color_support = True
     else:
         true_color_support = os.getenv('COLORTERM') in ['truecolor', '24bit']
 
-    colorama.deinit()
     return true_color_support
 
 

@@ -13,9 +13,6 @@ setup(
     author=pycolorecho.__author__,
     description=pycolorecho.__description__,
     requires_python=">=3.10",
-    install_requires=[
-        "colorama"
-    ],
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
     keywords=[
