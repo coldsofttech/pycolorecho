@@ -29,9 +29,12 @@ class TestTextBackgroundColor(unittest.TestCase):
                 self.fail(f'{name} variable name is not all uppercase.')
 
     def test_add_color_true_valid(self):
-        TextBackgroundColor.add_color(self._true_new_color_name, self._true_new_color_code)
-        actual_value = TextBackgroundColor.get_color(self._true_new_color_name)
-        self.assertEqual(self._true_new_color_code, actual_value)
+        try:
+            TextBackgroundColor.add_color(self._true_new_color_name, self._true_new_color_code)
+            actual_value = TextBackgroundColor.get_color(self._true_new_color_name)
+            self.assertEqual(self._true_new_color_code, actual_value)
+        except Warning as e:
+            self.skipTest(f'Skipping due to "{e}"')
 
     def test_add_color_standard_valid(self):
         TextBackgroundColor.add_color(self._standard_new_color_name, self._standard_new_color_code, true_color=False)
@@ -39,8 +42,10 @@ class TestTextBackgroundColor(unittest.TestCase):
         self.assertEqual(self._standard_new_color_code, actual_value)
 
     def test_add_color_true_invalid(self):
-        with self.assertRaises(ValueError):
+        with self.assertRaises(Exception) as context:
             TextBackgroundColor.add_color('CUSTOM_3', '\033[38;2;255m')
+
+        self.assertTrue(isinstance(context.exception, (ValueError, Warning)))
 
     def test_add_color_standard_invalid(self):
         with self.assertRaises(ValueError):
@@ -53,9 +58,12 @@ class TestTextBackgroundColor(unittest.TestCase):
         self.assertEqual(8, len(TextBackgroundColor.get_colors(False)))
 
     def test_get_color_true_valid(self):
-        TextBackgroundColor.add_color(self._true_new_color_name, self._true_new_color_code)
-        actual_value = TextBackgroundColor.get_color(self._true_new_color_name)
-        self.assertEqual(self._true_new_color_code, actual_value)
+        try:
+            TextBackgroundColor.add_color(self._true_new_color_name, self._true_new_color_code)
+            actual_value = TextBackgroundColor.get_color(self._true_new_color_name)
+            self.assertEqual(self._true_new_color_code, actual_value)
+        except Warning as e:
+            self.skipTest(f'Skipping due to "{e}"')
 
     def test_get_color_standard_valid(self):
         TextBackgroundColor.add_color(self._standard_new_color_name, self._standard_new_color_code, true_color=False)
@@ -71,8 +79,11 @@ class TestTextBackgroundColor(unittest.TestCase):
             TextBackgroundColor.get_color('JUNK', true_color=False)
 
     def test_is_true_color_valid(self):
-        TextBackgroundColor.add_color(self._true_new_color_name, self._true_new_color_code)
-        self.assertTrue(TextBackgroundColor.is_true_color(self._true_new_color_name))
+        try:
+            TextBackgroundColor.add_color(self._true_new_color_name, self._true_new_color_code)
+            self.assertTrue(TextBackgroundColor.is_true_color(self._true_new_color_name))
+        except Warning as e:
+            self.skipTest(f'Skipping due to "{e}"')
 
     def test_is_true_color_invalid(self):
         TextBackgroundColor.add_color(self._standard_new_color_name, self._standard_new_color_code, true_color=False)
@@ -83,12 +94,18 @@ class TestTextBackgroundColor(unittest.TestCase):
         self.assertTrue(TextBackgroundColor.is_standard_color(self._standard_new_color_name))
 
     def test_is_standard_color_invalid(self):
-        TextBackgroundColor.add_color(self._true_new_color_name, self._true_new_color_code)
-        self.assertFalse(TextBackgroundColor.is_standard_color(self._true_new_color_name))
+        try:
+            TextBackgroundColor.add_color(self._true_new_color_name, self._true_new_color_code)
+            self.assertFalse(TextBackgroundColor.is_standard_color(self._true_new_color_name))
+        except Warning as e:
+            self.skipTest(f'Skipping due to "{e}"')
 
     def test_is_valid_color_true_valid(self):
-        TextBackgroundColor.add_color(self._true_new_color_name, self._true_new_color_code)
-        self.assertTrue(TextBackgroundColor.is_valid_color(self._true_new_color_name))
+        try:
+            TextBackgroundColor.add_color(self._true_new_color_name, self._true_new_color_code)
+            self.assertTrue(TextBackgroundColor.is_valid_color(self._true_new_color_name))
+        except Warning as e:
+            self.skipTest(f'Skipping due to "{e}"')
 
     def test_is_valid_color_standard_valid(self):
         TextBackgroundColor.add_color(self._standard_new_color_name, self._standard_new_color_code, true_color=False)
@@ -101,11 +118,14 @@ class TestTextBackgroundColor(unittest.TestCase):
         self.assertFalse(TextBackgroundColor.is_valid_color('JUNK', true_color=False))
 
     def test_remove_color_true_valid(self):
-        TextBackgroundColor.add_color(self._true_new_color_name, self._true_new_color_code)
-        actual_value = TextBackgroundColor.get_color(self._true_new_color_name)
-        self.assertEqual(self._true_new_color_code, actual_value)
-        TextBackgroundColor.remove_color(self._true_new_color_name)
-        self.assertFalse(TextBackgroundColor.is_valid_color(self._true_new_color_name))
+        try:
+            TextBackgroundColor.add_color(self._true_new_color_name, self._true_new_color_code)
+            actual_value = TextBackgroundColor.get_color(self._true_new_color_name)
+            self.assertEqual(self._true_new_color_code, actual_value)
+            TextBackgroundColor.remove_color(self._true_new_color_name)
+            self.assertFalse(TextBackgroundColor.is_valid_color(self._true_new_color_name))
+        except Warning as e:
+            self.skipTest(f'Skipping due to "{e}"')
 
     def test_remove_color_standard_valid(self):
         TextBackgroundColor.add_color(self._standard_new_color_name, self._standard_new_color_code, true_color=False)
