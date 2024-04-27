@@ -100,11 +100,17 @@ jobs:
           sudo apt update
           sudo apt-get install -y at-spi2-core xvfb gnome-terminal dbus-x11
 
-      - name: Enable Display & Terminal Support
+      - name: Enable Terminal Color Support
         run: |
           export TERM=gnome-terminal
-          export DISPLAY=:99.0
           echo $TERM
+
+      - name: Configure Display
+        run: |
+          export DISPLAY=:99.0
+
+      - name: Start Dbus
+        run: |
           export $(dbus-launch)
 
       - name: Run Tests
