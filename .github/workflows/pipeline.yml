@@ -121,9 +121,17 @@ jobs:
         run: |
           export $(dbus-launch)
 
+      - name: Echo
+        run: |
+          ls
+
       - name: Run Tests
         run: |
           xvfb-run dbus-launch gnome-terminal -- bash -c "pytest tests -vv -rEPW -o pytest_collection_order=alphabetical --cache-clear --color=yes --html=pytest_results.html --self-contained-html"
+
+      - name: Echo
+        run: |
+          ls
 
       - name: Check For Failures
         if: always()
