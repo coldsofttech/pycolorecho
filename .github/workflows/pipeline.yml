@@ -86,7 +86,7 @@ jobs:
         os: [ ubuntu-latest, windows-latest, macos-latest ]
         python-version: [ '3.10' ]
     runs-on: ${{ matrix.os }}
-    needs: [ test, test_ubuntu_gnome, test_ubuntu_xterm ]
+    needs: test
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
