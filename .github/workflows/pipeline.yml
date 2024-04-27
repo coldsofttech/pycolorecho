@@ -251,7 +251,7 @@ jobs:
 
       - name: Run Tests
         run: |
-          xvfb-run konsole --hold -e xvfb-run dbus-launch gnome-terminal -- bash -c "pytest tests -vv -rEPW -o pytest_collection_order=alphabetical --cache-clear --color=yes --html=pytest_results.html --self-contained-html"
+          xvfb-run konsole --hold -e "pytest tests -vv -rEPW -o pytest_collection_order=alphabetical --cache-clear --color=yes --html=pytest_results.html --self-contained-html"
 
       - name: Check For Failures
         if: always()
