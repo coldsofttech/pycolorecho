@@ -41,7 +41,7 @@ def _is_colorization_supported() -> bool:
 
 def _is_true_color_supported() -> bool:
     import colorama
-    
+
     colorama.init()
 
     if os.name == 'nt':
