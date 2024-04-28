@@ -20,6 +20,7 @@ class TestTextColor(unittest.TestCase):
         TextColor.remove_color(self._standard_new_color_name, true_color=False)
 
     def test_variable_names(self):
+        """Test if names of all the constants are in upper case."""
         color_variables = [
             name for name, value in vars(TextColor).items()
             if isinstance(value, str) and name != '__module__'
@@ -29,6 +30,7 @@ class TestTextColor(unittest.TestCase):
                 self.fail(f'{name} variable name is not all uppercase.')
 
     def test_add_color_true_valid(self):
+        """Test if the add color works as expected."""
         try:
             TextColor.add_color(self._true_new_color_name, self._true_new_color_code)
             actual_value = TextColor.get_color(self._true_new_color_name)
@@ -37,27 +39,33 @@ class TestTextColor(unittest.TestCase):
             self.skipTest(f'Skipping due to "{e}"')
 
     def test_add_color_standard_valid(self):
+        """Test if the add color works as expected."""
         TextColor.add_color(self._standard_new_color_name, self._standard_new_color_code, true_color=False)
         actual_value = TextColor.get_color(self._standard_new_color_name, true_color=False)
         self.assertEqual(self._standard_new_color_code, actual_value)
 
     def test_add_color_true_invalid(self):
+        """Test if the add color raises ValueError or Warning as expected."""
         with self.assertRaises(Exception) as context:
             TextColor.add_color('CUSTOM_3', '\033[48;2;255m')
 
         self.assertTrue(isinstance(context.exception, (ValueError, Warning)))
 
     def test_add_color_standard_invalid(self):
+        """Test if the add color raises ValueError as expected."""
         with self.assertRaises(ValueError):
             TextColor.add_color('CUSTOM_4', '\033[48;2m', true_color=False)
 
     def test_get_colors_true(self):
+        """Test if the get colors works as expected."""
         self.assertEqual(5, len(TextColor.get_colors()))
 
     def test_get_colors_standard(self):
+        """Test if the get colors works as expected."""
         self.assertEqual(8, len(TextColor.get_colors(False)))
 
     def test_get_color_true_valid(self):
+        """Test if the get color works as expected."""
         try:
             TextColor.add_color(self._true_new_color_name, self._true_new_color_code)
             actual_value = TextColor.get_color(self._true_new_color_name)
@@ -66,19 +74,23 @@ class TestTextColor(unittest.TestCase):
             self.skipTest(f'Skipping due to "{e}"')
 
     def test_get_color_standard_valid(self):
+        """Test if the get color works as expected."""
         TextColor.add_color(self._standard_new_color_name, self._standard_new_color_code, true_color=False)
         actual_value = TextColor.get_color(self._standard_new_color_name, true_color=False)
         self.assertEqual(self._standard_new_color_code, actual_value)
 
     def test_get_color_true_unavailable(self):
+        """Test if the get color works as expected."""
         with self.assertRaises(ValueError):
             TextColor.get_color('JUNK')
 
     def test_get_color_standard_unavailable(self):
+        """Test if the get color works as expected."""
         with self.assertRaises(ValueError):
             TextColor.get_color('JUNK', true_color=False)
 
     def test_is_true_color_valid(self):
+        """Test if is true color works as expected."""
         try:
             TextColor.add_color(self._true_new_color_name, self._true_new_color_code)
             self.assertTrue(TextColor.is_true_color(self._true_new_color_name))
@@ -86,14 +98,17 @@ class TestTextColor(unittest.TestCase):
             self.skipTest(f'Skipping due to "{e}"')
 
     def test_is_true_color_invalid(self):
+        """Test if is true color works as expected."""
         TextColor.add_color(self._standard_new_color_name, self._standard_new_color_code, true_color=False)
         self.assertFalse(TextColor.is_true_color(self._standard_new_color_name))
 
     def test_is_standard_color_valid(self):
+        """Test if is standard color works as expected."""
         TextColor.add_color(self._standard_new_color_name, self._standard_new_color_code, true_color=False)
         self.assertTrue(TextColor.is_standard_color(self._standard_new_color_name))
 
     def test_is_standard_color_invalid(self):
+        """Test if is standard color works as expected."""
         try:
             TextColor.add_color(self._true_new_color_name, self._true_new_color_code)
             self.assertFalse(TextColor.is_standard_color(self._true_new_color_name))
@@ -101,6 +116,7 @@ class TestTextColor(unittest.TestCase):
             self.skipTest(f'Skipping due to "{e}"')
 
     def test_is_valid_color_true_valid(self):
+        """Test if is valid color works as expected."""
         try:
             TextColor.add_color(self._true_new_color_name, self._true_new_color_code)
             self.assertTrue(TextColor.is_valid_color(self._true_new_color_name))
@@ -108,16 +124,20 @@ class TestTextColor(unittest.TestCase):
             self.skipTest(f'Skipping due to "{e}"')
 
     def test_is_valid_color_standard_valid(self):
+        """Test if is valid color works as expected."""
         TextColor.add_color(self._standard_new_color_name, self._standard_new_color_code, true_color=False)
         self.assertTrue(TextColor.is_valid_color(self._standard_new_color_name, true_color=False))
 
     def test_is_valid_color_true_unavailable(self):
+        """Test if is valid color works as expected."""
         self.assertFalse(TextColor.is_valid_color('JUNK'))
 
     def test_is_valid_color_standard_unavailable(self):
+        """Test if is valid color works as expected."""
         self.assertFalse(TextColor.is_valid_color('JUNK', true_color=False))
 
     def test_remove_color_true_valid(self):
+        """Test if the remove color works as expected."""
         try:
             TextColor.add_color(self._true_new_color_name, self._true_new_color_code)
             actual_value = TextColor.get_color(self._true_new_color_name)
@@ -128,6 +148,7 @@ class TestTextColor(unittest.TestCase):
             self.skipTest(f'Skipping due to "{e}"')
 
     def test_remove_color_standard_valid(self):
+        """Test if the remove color works as expected."""
         TextColor.add_color(self._standard_new_color_name, self._standard_new_color_code, true_color=False)
         actual_value = TextColor.get_color(self._standard_new_color_name, true_color=False)
         self.assertEqual(self._standard_new_color_code, actual_value)
@@ -135,6 +156,7 @@ class TestTextColor(unittest.TestCase):
         self.assertFalse(TextColor.is_valid_color(self._standard_new_color_name, true_color=False))
 
     def test_text_color_true(self):
+        """Test if text colors as works as expected."""
         value = (
             f'{TextColor.ABSOLUTE_ZERO}'
             f'This is a test ABSOLUTE ZERO colored message'
@@ -148,6 +170,7 @@ class TestTextColor(unittest.TestCase):
         self.assertEqual(expected_value, output_buffer.getvalue())
 
     def test_text_color_standard(self):
+        """Test if text colors as works as expected."""
         value = (
             f'{TextColor.BLUE}'
             f'This is a test BLUE colored message'
