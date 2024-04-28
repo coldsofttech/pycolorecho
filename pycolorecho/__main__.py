@@ -827,7 +827,7 @@ class TextColor:
     @classmethod
     def remove_color(cls, name: str, true_color: Optional[bool] = True) -> None:
         """
-        Deletes the custom background color specified by name from the dictionary.
+        Deletes the custom foreground color specified by name from the dictionary.
         :param name: The name of the color to be removed.
         :type name: str
         :param true_color: Indicates whether true color format is chosen (True) or
