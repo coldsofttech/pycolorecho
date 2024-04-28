@@ -11,7 +11,7 @@ class TestHEXCodes(unittest.TestCase):
         """Test if values of all the constants are in HEX format."""
         hex_codes = [
             value for name, value in vars(HEXCodes).items()
-            if isinstance(value, str) and name != '__module__'
+            if isinstance(value, str) and not name.startswith('__')
         ]
         if not re.match(r'^#[0-9A-Fa-f]{6}$', hex_codes[0]):
             hex_codes = hex_codes[1:]
@@ -22,7 +22,7 @@ class TestHEXCodes(unittest.TestCase):
         """Test if names of all the constants are in upper case."""
         hex_variables = [
             name for name, value in vars(HEXCodes).items()
-            if isinstance(value, str) and name != '__module__'
+            if isinstance(value, str) and not name.startswith('__')
         ]
         for name in hex_variables:
             if not name.isupper():

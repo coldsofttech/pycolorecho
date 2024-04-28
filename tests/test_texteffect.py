@@ -19,7 +19,7 @@ class TestTextEffect(unittest.TestCase):
         """Test if names of all the constants are in upper case."""
         color_variables = [
             name for name, value in vars(TextEffect).items()
-            if isinstance(value, str) and name != '__module__'
+            if isinstance(value, str) and not name.startswith('__')
         ]
         for name in color_variables:
             if not name.isupper():
