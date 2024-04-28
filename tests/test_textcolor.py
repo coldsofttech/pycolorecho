@@ -58,7 +58,7 @@ class TestTextColor(unittest.TestCase):
 
     def test_get_colors_true(self):
         """Test if the get colors works as expected."""
-        self.assertEqual(5, len(TextColor.get_colors()))
+        self.assertEqual(879, len(TextColor.get_colors()))
 
     def test_get_colors_standard(self):
         """Test if the get colors works as expected."""
