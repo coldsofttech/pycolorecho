@@ -1,8 +1,8 @@
 import unittest
 
-from pycolorecho import RESET, TextColor, TextBackgroundColor, TextEffect, TextCase, ColorMapper
-from pycolorecho.__main__ import _get_colorize_sequence, _get_colorized_message, \
-    _get_colorized_message_by_regex_pattern, _get_colorized_message_by_mappings
+from pycolorecho import RESET, TextColor, TextBackgroundColor, TextEffect, TextCase, ColorMapper, \
+    get_colorized_message, get_colorized_message_by_regex_pattern, get_colorized_message_by_mappings
+from pycolorecho.__main__ import _get_colorize_sequence
 
 
 class TestPyColorEcho(unittest.TestCase):
@@ -57,7 +57,7 @@ class TestPyColorEcho(unittest.TestCase):
         )
         self.assertEqual(
             expected_value,
-            _get_colorized_message(
+            get_colorized_message(
                 message='This is a test message',
                 text_color=TextColor.RED,
                 text_background_color=TextBackgroundColor.ACID_GREEN,
@@ -71,7 +71,7 @@ class TestPyColorEcho(unittest.TestCase):
         expected_value = 'This is a test message'
         self.assertEqual(
             expected_value,
-            _get_colorized_message('This is a test message')
+            get_colorized_message('This is a test message')
         )
 
     def test_get_colorized_message_text_color(self):
@@ -81,7 +81,7 @@ class TestPyColorEcho(unittest.TestCase):
         )
         self.assertEqual(
             expected_value,
-            _get_colorized_message(
+            get_colorized_message(
                 message='This is a test message',
                 text_color=TextColor.RED
             )
@@ -94,7 +94,7 @@ class TestPyColorEcho(unittest.TestCase):
         )
         self.assertEqual(
             expected_value,
-            _get_colorized_message(
+            get_colorized_message(
                 message='This is a test message',
                 text_background_color=TextBackgroundColor.ACID_GREEN
             )
@@ -107,7 +107,7 @@ class TestPyColorEcho(unittest.TestCase):
         )
         self.assertEqual(
             expected_value,
-            _get_colorized_message(
+            get_colorized_message(
                 message='This is a test message',
                 text_effect=TextEffect.BOLD
             )
@@ -118,7 +118,7 @@ class TestPyColorEcho(unittest.TestCase):
         expected_value = 'this-is-a-test-message'
         self.assertEqual(
             expected_value,
-            _get_colorized_message(
+            get_colorized_message(
                 message='This is a test message',
                 text_case=TextCase.KEBAB_CASE
             )
@@ -132,7 +132,7 @@ class TestPyColorEcho(unittest.TestCase):
         )
         self.assertEqual(
             expected_value,
-            _get_colorized_message_by_regex_pattern(
+            get_colorized_message_by_regex_pattern(
                 message='This is a test message',
                 regex_pattern=r'test',
                 text_color=TextColor.RED,
@@ -150,7 +150,7 @@ class TestPyColorEcho(unittest.TestCase):
         )
         self.assertEqual(
             expected_value,
-            _get_colorized_message_by_regex_pattern(
+            get_colorized_message_by_regex_pattern(
                 message='This is a test message',
                 regex_pattern=r'TEST',
                 text_color=TextColor.RED,
@@ -169,7 +169,7 @@ class TestPyColorEcho(unittest.TestCase):
         )
         self.assertEqual(
             expected_value,
-            _get_colorized_message_by_regex_pattern(
+            get_colorized_message_by_regex_pattern(
                 message='This is a test message',
                 regex_pattern=r'test',
                 text_color=TextColor.RED,
@@ -185,7 +185,7 @@ class TestPyColorEcho(unittest.TestCase):
         expected_value = 'This is a test message'
         self.assertEqual(
             expected_value,
-            _get_colorized_message_by_regex_pattern(
+            get_colorized_message_by_regex_pattern(
                 message='This is a test message',
                 regex_pattern=r'nottest',
                 text_color=TextColor.RED,
@@ -213,7 +213,7 @@ class TestPyColorEcho(unittest.TestCase):
         )
         self.assertEqual(
             expected_value,
-            _get_colorized_message_by_mappings(
+            get_colorized_message_by_mappings(
                 message='This is a test message',
                 mappings=colorization
             )
@@ -237,7 +237,7 @@ class TestPyColorEcho(unittest.TestCase):
         )
         self.assertEqual(
             expected_value,
-            _get_colorized_message_by_mappings(
+            get_colorized_message_by_mappings(
                 message='This is a test message',
                 mappings=colorization
             )
@@ -261,7 +261,7 @@ class TestPyColorEcho(unittest.TestCase):
         )
         self.assertEqual(
             expected_value,
-            _get_colorized_message_by_mappings(
+            get_colorized_message_by_mappings(
                 message='This is a test message',
                 mappings=colorization
             )
@@ -282,7 +282,7 @@ class TestPyColorEcho(unittest.TestCase):
         )
         self.assertEqual(
             expected_value,
-            _get_colorized_message_by_mappings(
+            get_colorized_message_by_mappings(
                 message='This is a test message',
                 mappings=colorization
             )

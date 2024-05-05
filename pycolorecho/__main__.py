@@ -7,7 +7,7 @@ from typing import Optional, Union
 RESET: str = "\033[0m"
 
 
-def _is_colorization_supported() -> bool:
+def is_colorization_supported() -> bool:
     """
     Checks if the current operating system supports colorization.
     :return: True if colorization is supported, False otherwise.
@@ -41,7 +41,7 @@ def _is_colorization_supported() -> bool:
         os.remove(file_name)
 
 
-def _is_true_color_supported() -> bool:
+def is_true_color_supported() -> bool:
     """
     Verifies whether the true color format is supported by the current operating system and terminal.
     :return: True if true color format is supported, False otherwise.
@@ -3147,7 +3147,7 @@ class TextBackgroundColor:
         Validate.validate_type(true_color, bool, 'true_color should be a boolean.')
         Validate.validate_ansi(ansi_code)
 
-        if true_color and not _is_true_color_supported():
+        if true_color and not is_true_color_supported():
             raise Warning('True colors are not supported by this terminal.')
 
         code = ansi_code[2:].rstrip('m')
@@ -5095,7 +5095,7 @@ class TextColor:
         Validate.validate_type(true_color, bool, 'true_color should be a boolean.')
         Validate.validate_ansi(ansi_code)
 
-        if true_color and not _is_true_color_supported():
+        if true_color and not is_true_color_supported():
             raise Warning('True colors are not supported by this terminal.')
 
         code = ansi_code[2:].rstrip('m')
@@ -5669,7 +5669,7 @@ def _get_colorize_sequence(
     return colorize_sequence
 
 
-def _get_colorized_message(
+def get_colorized_message(
         message: str,
         text_color: Optional[str] = None,
         text_background_color: Optional[str] = None,
@@ -5691,6 +5691,12 @@ def _get_colorized_message(
     :return: The generated colorized message.
     :rtype: str
     """
+    Validate.validate_type(message, str, 'message should be a string.')
+    Validate.validate_type(text_color, Union[str, None], 'text_color should be a string.')
+    Validate.validate_type(text_background_color, Union[str, None], 'text_background_color should be a string.')
+    Validate.validate_type(text_effect, Union[str, None], 'text_effect should be a string.')
+    Validate.validate_type(text_case, Union[int, None], 'text_case should be an integer.')
+
     if text_color is None and text_background_color is None and text_effect is None:
         return f'{TextCase.convert_text(message, text_case)}'
 
@@ -5702,9 +5708,9 @@ def _get_colorized_message(
     )
 
 
-def _get_colorized_message_by_regex_pattern(
+def get_colorized_message_by_regex_pattern(
         message: str,
-        regex_pattern: Optional[str] = None,
+        regex_pattern: str,
         text_color: Optional[str] = None,
         text_background_color: Optional[str] = None,
         text_effect: Optional[str] = None,
@@ -5735,6 +5741,15 @@ def _get_colorized_message_by_regex_pattern(
     :return: The generated colorized message.
     :rtype: str
     """
+    Validate.validate_type(message, str, 'message should be a string.')
+    Validate.validate_type(regex_pattern, str, 'regex_pattern should be a string.')
+    Validate.validate_type(text_color, Union[str, None], 'text_color should be a string.')
+    Validate.validate_type(text_background_color, Union[str, None], 'text_background_color should be a string.')
+    Validate.validate_type(text_effect, Union[str, None], 'text_effect should be a string.')
+    Validate.validate_type(text_case, Union[int, None], 'text_case should be an integer.')
+    Validate.validate_type(color_match, Union[bool, None], 'color_match should be a boolean.')
+    Validate.validate_type(ignore_case, Union[bool, None], 'ignore_case should be a boolean.')
+
     colorized_message = message
     colorize_sequence = _get_colorize_sequence(text_color, text_background_color, text_effect)
 
@@ -5779,9 +5794,9 @@ def _get_colorized_message_by_regex_pattern(
     return colorized_message
 
 
-def _get_colorized_message_by_mappings(
+def get_colorized_message_by_mappings(
         message: str,
-        mappings: Optional[ColorMapper] = None
+        mappings: ColorMapper
 ) -> str:
     """
     Generates a colorized message based on the provided mappings.
@@ -5792,6 +5807,9 @@ def _get_colorized_message_by_mappings(
     :return: The generated colorized message.
     :rtype: str
     """
+    Validate.validate_type(message, str, 'message should be a string.')
+    Validate.validate_type(mappings, ColorMapper, 'mappings should be of ColorMapper type.')
+
     colorized_message = message
     for key, value in mappings.get_mappings().items():
         keywords = value.get('keywords', [])
@@ -5906,19 +5924,21 @@ def echo(
         Validate.validate_type(text_effect, Union[str, None], 'text_effect should be a string.')
         Validate.validate_type(text_case, Union[int, None], 'text_case should be an integer.')
 
+    Validate.validate_type(message, str, 'message should be a string.')
+
     colorized_message = message
 
-    if _is_colorization_supported():
+    if is_colorization_supported():
         if mappings is not None:
-            colorized_message = _get_colorized_message_by_mappings(colorized_message, mappings)
+            colorized_message = get_colorized_message_by_mappings(colorized_message, mappings)
         elif regex_pattern is not None:
-            colorized_message = _get_colorized_message_by_regex_pattern(
+            colorized_message = get_colorized_message_by_regex_pattern(
                 colorized_message, regex_pattern,
                 text_color, text_background_color, text_effect, text_case,
                 color_match, ignore_case
             )
         else:
-            colorized_message = _get_colorized_message(
+            colorized_message = get_colorized_message(
                 colorized_message, text_color, text_background_color, text_effect, text_case
             )
 
