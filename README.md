@@ -78,6 +78,37 @@ echo('This is a test error message', mappings=color_mappings)
     2) Colorizing a message by matching it with a regex pattern and specifying text foreground color, text background
        color, text effect, text case, ignore case, and color match.
     3) Colorizing a message by matching it with mappings (utilizing a ColorMapper) and specifying text foreground.
+- `get_colorized_message(message: str, text_color: Optional[str] = None, text_background_color: Optional[str] = None, text_effect: Optional[str] = None, text_case: Optional[int] = TextCase.NONE) -> str` -
+  Generates a colorized message based on the provided inputs.
+- `get_colorized_message_by_regex_pattern(message: str, regex_pattern: str, text_color: Optional[str] = None, text_background_color: Optional[str] = None, text_effect: Optional[str] = None, text_case: Optional[int] = TextCase.NONE, color_match: Optional[bool] = False, ignore_case: Optional[bool] = False) -> str` -
+  Generates a colorized message based on the provided regex pattern and inputs.
+- `get_colorized_message_by_mappings(message: str, mappings: Optional[ColorMapper] = None) -> str` - Generates a
+  colorized message based on the provided mappings.
+- `is_colorization_supported() -> bool` - Checks if the current operating system supports colorization. Returns True if
+  colorization is supported, False otherwise.
+- `is_true_color_supported() -> bool` - Verifies whether the true color format is supported by the current operating
+  system and terminal. Returns True if true color format is supported, False otherwise.
+
+#### Usage
+
+```python
+from pycolorecho import is_colorization_supported, is_true_color_supported, get_colorized_message, get_colorized_message_by_regex_pattern, get_colorized_message_by_mappings, TextColor, TextBackgroundColor, TextEffect, ColorMapper
+
+print(is_colorization_supported())  # Prints True if colorization is supported, False otherwise
+print(is_true_color_supported())  # Prints True if true color format is supported, False otherwise
+
+# Retrieving colorized message
+print(get_colorized_message('This is a test message', text_color=TextColor.RED))
+
+# Retrieving colorized message by regex pattern
+print(get_colorized_message_by_regex_pattern('This is a test message', regex_pattern=r'test', text_color=TextColor.RED,
+                                             text_background_color=TextBackgroundColor.ACID_GREEN))
+
+# Retrieving colorized message by mappings
+color_mappings = ColorMapper()
+color_mappings.add_mapping('error', [r'error'], text_color=TextColor.RED, text_effect=TextEffect.UNDERLINE)
+print(get_colorized_message_by_mappings('This is a test error message', mappings=color_mappings))
+```
 
 ### Layer
 
